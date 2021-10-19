@@ -160,7 +160,7 @@
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
-pub(crate) const LOG_TARGET: &'static str = "runtime::election-provider-support";
+pub(crate) const LOG_TARGET: &'static str = "runtime::staking";
 
 // syntactic sugar for logging.
 #[macro_export]
