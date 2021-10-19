@@ -91,6 +91,9 @@ impl<T: Config> ElectionProvider<T::AccountId, T::BlockNumber> for OnChainSequen
 			seq_phragmen::<_, T::Accuracy>(desired_targets as usize, targets, voters, None)
 				.map_err(Error::from)?;
 
+		log!(warn, "winners: {:?}", winners);
+		log!(warn, "assignments: {:?}", assignments);
+
 		let staked = assignment_ratio_to_staked_normalized(assignments, &stake_of)?;
 		let winners = to_without_backing(winners);
 
