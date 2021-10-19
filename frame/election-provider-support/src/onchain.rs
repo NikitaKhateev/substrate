@@ -17,7 +17,7 @@
 
 //! An implementation of [`ElectionProvider`] that does an on-chain sequential phragmen.
 
-use crate::{ElectionDataProvider, ElectionProvider};
+use crate::{ElectionDataProvider, ElectionProvider, log};
 use sp_npos_elections::*;
 use sp_std::{collections::btree_map::BTreeMap, marker::PhantomData, prelude::*};
 
@@ -70,14 +70,19 @@ impl<T: Config> ElectionProvider<T::AccountId, T::BlockNumber> for OnChainSequen
 
 	fn elect() -> Result<Supports<T::AccountId>, Self::Error> {
 		let voters = Self::DataProvider::voters(None).map_err(Error::DataProvider)?;
+		log!(warn, "voters: {:?}", voters);
 		let targets = Self::DataProvider::targets(None).map_err(Error::DataProvider)?;
+		log!(warn, "targets: {:?}", targets);
 		let desired_targets = Self::DataProvider::desired_targets().map_err(Error::DataProvider)?;
+		log!(warn, "desired_targets: {:?}", desired_targets);
 
 		let mut stake_map: BTreeMap<T::AccountId, VoteWeight> = BTreeMap::new();
 
 		voters.iter().for_each(|(v, s, _)| {
 			stake_map.insert(v.clone(), *s);
 		});
+
+		log!(warn, "stake_map: {:?}", stake_map);
 
 		let stake_of =
 			|w: &T::AccountId| -> VoteWeight { stake_map.get(w).cloned().unwrap_or_default() };

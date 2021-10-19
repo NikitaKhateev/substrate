@@ -160,6 +160,19 @@
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
+pub(crate) const LOG_TARGET: &'static str = "runtime::election-provider-support";
+
+// syntactic sugar for logging.
+#[macro_export]
+macro_rules! log {
+	($level:tt, $patter:expr $(, $values:expr)* $(,)?) => {
+		log::$level!(
+			target: crate::LOG_TARGET,
+			concat!("[{:?}] 💸 ", $patter), 1 $(, $values)*
+		)
+	};
+}
+
 pub mod onchain;
 use sp_std::{fmt::Debug, prelude::*};
 

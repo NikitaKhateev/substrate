@@ -406,11 +406,13 @@ impl<T: Config> Pallet<T> {
 		is_genesis: bool,
 	) -> Option<Vec<T::AccountId>> {
 		let election_result = if is_genesis {
+			log!(warn, "holding genesis election");
 			T::GenesisElectionProvider::elect().map_err(|e| {
 				log!(warn, "genesis election provider failed due to {:?}", e);
 				Self::deposit_event(Event::GenesisStakingElectionFailed);
 			})
 		} else {
+			log!(warn, "holding common election");
 			T::ElectionProvider::elect().map_err(|e| {
 				log!(warn, "election provider failed due to {:?}", e);
 				Self::deposit_event(Event::StakingElectionFailed);
