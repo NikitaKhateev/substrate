@@ -549,7 +549,7 @@ pub mod pallet {
 		/// The election failed. No new era is planned.
 		StakingElectionFailed,
 		GenesisStakingElectionFailed,
-		ZeroExposureStakingElectionFailed,
+		ZeroExposureStakingElectionFailed111,
 		/// An account has stopped participating as either a validator or nominator.
 		/// \[stash\]
 		Chilled(T::AccountId),

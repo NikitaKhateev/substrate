@@ -443,7 +443,7 @@ impl<T: Config> Pallet<T> {
 				_ => (),
 			}
 
-			Self::deposit_event(Event::ZeroExposureStakingElectionFailed);
+			Self::deposit_event(Event::ZeroExposureStakingElectionFailed111);
 			return None
 		}
 
