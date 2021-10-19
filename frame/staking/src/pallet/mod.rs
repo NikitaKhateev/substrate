@@ -548,6 +548,8 @@ pub mod pallet {
 		Kicked(T::AccountId, T::AccountId),
 		/// The election failed. No new era is planned.
 		StakingElectionFailed,
+		GenesisStakingElectionFailed,
+		ZeroExposureStakingElectionFailed,
 		/// An account has stopped participating as either a validator or nominator.
 		/// \[stash\]
 		Chilled(T::AccountId),

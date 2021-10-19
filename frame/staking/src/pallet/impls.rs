@@ -408,7 +408,7 @@ impl<T: Config> Pallet<T> {
 		let election_result = if is_genesis {
 			T::GenesisElectionProvider::elect().map_err(|e| {
 				log!(warn, "genesis election provider failed due to {:?}", e);
-				Self::deposit_event(Event::StakingElectionFailed);
+				Self::deposit_event(Event::GenesisStakingElectionFailed);
 			})
 		} else {
 			T::ElectionProvider::elect().map_err(|e| {
@@ -417,7 +417,7 @@ impl<T: Config> Pallet<T> {
 			})
 		}
 		.ok()?;
-
+		let ellen = election_result.len();
 		let exposures = Self::collect_exposures(election_result);
 		if (exposures.len() as u32) < Self::minimum_validator_count().max(1) {
 			// Session will panic if we ever return an empty validator set, thus max(1) ^^.
@@ -441,7 +441,8 @@ impl<T: Config> Pallet<T> {
 				_ => (),
 			}
 
-			Self::deposit_event(Event::StakingElectionFailed);
+			log!(warn, "election provider failed due to zero len {:?}", ellen);
+			Self::deposit_event(Event::ZeroExposureStakingElectionFailed);
 			return None
 		}
 
