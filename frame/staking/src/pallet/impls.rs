@@ -443,7 +443,6 @@ impl<T: Config> Pallet<T> {
 				_ => (),
 			}
 
-			// log!(warn, "election provider failed due to zero len {:?}", ellen);
 			Self::deposit_event(Event::ZeroExposureStakingElectionFailed);
 			return None
 		}
